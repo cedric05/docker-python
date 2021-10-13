@@ -9,7 +9,7 @@ on:
     tags:
       - v*
 env:
-  IMAGE_NAME: cedric05/python3.9
+  IMAGE_NAME: cedric05/python
 jobs:
   push:
     runs-on: ubuntu-latest
