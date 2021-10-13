@@ -75,7 +75,7 @@ RUN cd /usr/local/bin \
 ENV PYTHON_PIP_VERSION 21.3
 # https://github.com/pypa/get-pip
 ENV PYTHON_GET_PIP_URL https://raw.githubusercontent.com/pypa/get-pip/21.3/public/get-pip.py
-ENV PYTHON_GET_PIP_SHA256 8006625804f55e1bd99ad4214fd07082fee27a1c35945648a58f9087a714e9d4
+ENV PYTHON_GET_PIP_SHA256 4ab6a1231fdce46e230d55947f6207c39e792d895da9197c2fec4143f5456a62
 
 RUN set -ex; \
 	\
