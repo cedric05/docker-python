@@ -22,7 +22,7 @@ RUN wget  https://www.openssl.org/source/openssl-1.1.1l.tar.gz \
 	&&  echo "/usr/local/ssl/lib" > /etc/ld.so.conf.d/openssl-1.1.1c.conf \
 	&& cd .. \
 	&& rm -rf *\
-	&& ldconfig
+	&& ldconfig \
 	&& mv /usr/local/ssl/bin/openssl /usr/bin/openssl # override openssl 
 
 # ensure local python is preferred over distribution python
