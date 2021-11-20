@@ -16,10 +16,14 @@ RUN wget  https://www.openssl.org/source/openssl-1.1.1l.tar.gz \
 	&& tar -xf  openssl-1.1.1l.tar.gz \
 	&&  cd openssl-1.1.1l \
 	&&  ./config --prefix=/usr/local/ssl --openssldir=/usr/local/ssl shared zlib \
-	&& make && make test && make install \
+        && make \
+        #&& make test \
+        && make install \
 	&&  echo "/usr/local/ssl/lib" > /etc/ld.so.conf.d/openssl-1.1.1c.conf \
 	&& cd .. \
-	&& rm -rf *
+	&& rm -rf *\
+	&& ldconfig
+	&& mv /usr/local/ssl/bin/openssl /usr/bin/openssl # override openssl 
 
 # ensure local python is preferred over distribution python
 ENV PATH /usr/local/bin:$PATH
@@ -62,7 +66,7 @@ RUN set -ex \
 		--with-system-expat \
 		--with-system-ffi \
 		--without-ensurepip \
-	&& make -j "$(nproc)" \
+	&& ldconfig && make -j "$(nproc)" \
 	&& make install \
 	&& rm -rf /usr/src/python \
 	\
