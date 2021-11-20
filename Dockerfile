@@ -66,6 +66,7 @@ RUN set -ex \
 		--with-system-expat \
 		--with-system-ffi \
 		--without-ensurepip \
+		--with-openssl=/usr/local/ssl/ \
 	&& ldconfig && make -j "$(nproc)" \
 	&& make install \
 	&& rm -rf /usr/src/python \
