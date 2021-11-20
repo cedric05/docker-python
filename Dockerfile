@@ -9,6 +9,18 @@
 
 FROM buildpack-deps:stretch
 
+RUN apt update \
+	&& apt install build-essential checkinstall zlib1g-dev -y
+WORKDIR /usr/local/src
+RUN wget  https://www.openssl.org/source/openssl-1.1.1l.tar.gz \ 
+	&& tar -xf  openssl-1.1.1l.tar.gz \
+	&&  cd openssl-1.1.1l \
+	&&  ./config --prefix=/usr/local/ssl --openssldir=/usr/local/ssl shared zlib \
+	&& make && make test && make install \
+	&&  echo "/usr/local/ssl/lib" > /etc/ld.so.conf.d/openssl-1.1.1c.conf \
+	&& cd .. \
+	&& rm -rf *
+
 # ensure local python is preferred over distribution python
 ENV PATH /usr/local/bin:$PATH
 
