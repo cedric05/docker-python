@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - 3.10.0
 
     # Publish `v1.2.3` tags as releases.
     tags:
