@@ -40,7 +40,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	&& rm -rf /var/lib/apt/lists/*
 
 ENV GPG_KEY E3FF2839C048B25C084DEBE9B26995E310250568
-ENV PYTHON_VERSION 3.10.0
+ENV PYTHON_VERSION 3.10.1
 
 RUN set -ex \
 	\
@@ -89,10 +89,10 @@ RUN cd /usr/local/bin \
 	&& ln -s python3-config python-config
 
 # if this is called "PIP_VERSION", pip explodes with "ValueError: invalid truth value '<VERSION>'"
-ENV PYTHON_PIP_VERSION 21.3
+ENV PYTHON_PIP_VERSION 21.3.1
 # https://github.com/pypa/get-pip
-ENV PYTHON_GET_PIP_URL https://raw.githubusercontent.com/pypa/get-pip/21.3/public/get-pip.py
-ENV PYTHON_GET_PIP_SHA256 4ab6a1231fdce46e230d55947f6207c39e792d895da9197c2fec4143f5456a62
+ENV PYTHON_GET_PIP_URL https://raw.githubusercontent.com/pypa/get-pip/21.3.1/public/get-pip.py
+ENV PYTHON_GET_PIP_SHA256 c518250e91a70d7b20cceb15272209a4ded2a0c263ae5776f129e0d9b5674309
 
 RUN set -ex; \
 	\
