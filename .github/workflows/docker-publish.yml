@@ -6,6 +6,7 @@ on:
       - main
       - 3.10.0
       - 3.10.1
+      - 3.10.2
 
     # Publish `v1.2.3` tags as releases.
     tags:
