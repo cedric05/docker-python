@@ -40,7 +40,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	&& rm -rf /var/lib/apt/lists/*
 
 ENV GPG_KEY E3FF2839C048B25C084DEBE9B26995E310250568
-ENV PYTHON_VERSION 3.10.2
+ENV PYTHON_VERSION 3.10.3
 
 RUN set -ex \
 	\
