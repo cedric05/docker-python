@@ -12,14 +12,14 @@ FROM buildpack-deps:stretch
 RUN apt update \
 	&& apt install build-essential checkinstall zlib1g-dev -y
 WORKDIR /usr/local/src
-RUN wget  https://www.openssl.org/source/openssl-3.0.2.tar.gz \ 
-	&& tar -xf  openssl-3.0.2.tar.gz \
-	&&  cd openssl-3.0.2 \
+RUN wget  https://www.openssl.org/source/openssl-1.1.1n.tar.gz \ 
+	&& tar -xf  openssl-1.1.1n.tar.gz \
+	&&  cd openssl-1.1.1n \
 	&&  ./config --prefix=/usr/local/ssl --openssldir=/usr/local/ssl shared zlib \
         && make \
         #&& make test \
         && make install \
-	&&  echo "/usr/local/ssl/lib" > /etc/ld.so.conf.d/openssl-3.0.2c.conf \
+	&&  echo "/usr/local/ssl/lib" > /etc/ld.so.conf.d/openssl-1.1.1c.conf \
 	&& cd .. \
 	&& rm -rf *\
 	&& ldconfig \
