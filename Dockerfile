@@ -12,9 +12,9 @@ FROM buildpack-deps:stretch
 RUN apt update \
 	&& apt install build-essential checkinstall zlib1g-dev -y
 WORKDIR /usr/local/src
-RUN wget  https://www.openssl.org/source/openssl-1.1.1n.tar.gz \ 
-	&& tar -xf  openssl-1.1.1n.tar.gz \
-	&&  cd openssl-1.1.1n \
+RUN wget  https://www.openssl.org/source/openssl-1.1.1p.tar.gz \ 
+	&& tar -xf  openssl-1.1.1p.tar.gz \
+	&&  cd openssl-1.1.1p \
 	&&  ./config --prefix=/usr/local/ssl --openssldir=/usr/local/ssl shared zlib \
         && make \
         #&& make test \
@@ -40,7 +40,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	&& rm -rf /var/lib/apt/lists/*
 
 ENV GPG_KEY E3FF2839C048B25C084DEBE9B26995E310250568
-ENV PYTHON_VERSION 3.10.3
+ENV PYTHON_VERSION 3.10.5
 
 RUN set -ex \
 	\
@@ -91,8 +91,8 @@ RUN cd /usr/local/bin \
 # if this is called "PIP_VERSION", pip explodes with "ValueError: invalid truth value '<VERSION>'"
 ENV PYTHON_PIP_VERSION 21.3.1
 # https://github.com/pypa/get-pip
-ENV PYTHON_GET_PIP_URL https://raw.githubusercontent.com/pypa/get-pip/21.3.1/public/get-pip.py
-ENV PYTHON_GET_PIP_SHA256 c518250e91a70d7b20cceb15272209a4ded2a0c263ae5776f129e0d9b5674309
+ENV PYTHON_GET_PIP_URL https://raw.githubusercontent.com/pypa/get-pip/22.1.2/public/get-pip.py
+ENV PYTHON_GET_PIP_SHA256 ba3ab8267d91fd41c58dbce08f76db99f747f716d85ce1865813842bb035524d
 
 RUN set -ex; \
 	\
