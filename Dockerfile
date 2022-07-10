@@ -9,17 +9,25 @@
 
 FROM buildpack-deps:stretch
 
+ENV OPENSSL_VERSION 1.1.1p
+
+ENV GPG_KEY E3FF2839C048B25C084DEBE9B26995E310250568
+ENV PYTHON_VERSION 3.10.5
+
+ENV PYTHON_PIP_VERSION 22.1.2
+ENV PYTHON_GET_PIP_SHA256 ba3ab8267d91fd41c58dbce08f76db99f747f716d85ce1865813842bb035524d
+
 RUN apt update \
 	&& apt install build-essential checkinstall zlib1g-dev -y
 WORKDIR /usr/local/src
-RUN wget  https://www.openssl.org/source/openssl-1.1.1p.tar.gz \ 
-	&& tar -xf  openssl-1.1.1p.tar.gz \
-	&&  cd openssl-1.1.1p \
+RUN wget  https://www.openssl.org/source/openssl-${OPENSSL_VERSION}.tar.gz \ 
+	&& tar -xf  openssl-${OPENSSL_VERSION}.tar.gz \
+	&&  cd openssl-${OPENSSL_VERSION} \
 	&&  ./config --prefix=/usr/local/ssl --openssldir=/usr/local/ssl shared zlib \
         && make \
         #&& make test \
         && make install \
-	&&  echo "/usr/local/ssl/lib" > /etc/ld.so.conf.d/openssl-1.1.1c.conf \
+	&&  echo "/usr/local/ssl/lib" > /etc/ld.so.conf.d/openssl-${OPENSSL_VERSION}.conf \
 	&& cd .. \
 	&& rm -rf *\
 	&& ldconfig \
@@ -39,8 +47,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 		uuid-dev \
 	&& rm -rf /var/lib/apt/lists/*
 
-ENV GPG_KEY E3FF2839C048B25C084DEBE9B26995E310250568
-ENV PYTHON_VERSION 3.10.5
 
 RUN set -ex \
 	\
@@ -89,10 +95,9 @@ RUN cd /usr/local/bin \
 	&& ln -s python3-config python-config
 
 # if this is called "PIP_VERSION", pip explodes with "ValueError: invalid truth value '<VERSION>'"
-ENV PYTHON_PIP_VERSION 21.3.1
+
 # https://github.com/pypa/get-pip
-ENV PYTHON_GET_PIP_URL https://raw.githubusercontent.com/pypa/get-pip/22.1.2/public/get-pip.py
-ENV PYTHON_GET_PIP_SHA256 ba3ab8267d91fd41c58dbce08f76db99f747f716d85ce1865813842bb035524d
+ENV PYTHON_GET_PIP_URL https://raw.githubusercontent.com/pypa/get-pip/${PYTHON_PIP_VERSION}/public/get-pip.py
 
 RUN set -ex; \
 	\
