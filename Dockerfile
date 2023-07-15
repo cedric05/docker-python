@@ -7,7 +7,7 @@
 # PLEASE DO NOT EDIT IT DIRECTLY.
 #
 
-FROM buildpack-deps:stretch
+FROM debian:stretch-backports
 
 ENV OPENSSL_VERSION 1.1.1q
 
