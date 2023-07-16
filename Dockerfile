@@ -6,8 +6,26 @@
 #
 # PLEASE DO NOT EDIT IT DIRECTLY.
 #
+FROM debian/eol:stretch
 
-FROM debian:stretch-backports
+RUN set -eux; \
+	apt-get update; \
+	apt-get install -y --no-install-recommends \
+		ca-certificates \
+		curl \
+		gnupg \
+		netbase \
+		wget \
+		git \
+		mercurial \
+		openssh-client \
+		subversion \
+		libbluetooth-dev \
+		tk-dev \
+		uuid-dev \
+		procps \
+	; \
+	rm -rf /var/lib/apt/lists/*
 
 ENV OPENSSL_VERSION 1.1.1q
 
@@ -20,7 +38,7 @@ ENV PYTHON_GET_PIP_SHA256 36c6f6214694ef64cc70f4127ac0ccec668408a93825359d998fb3
 RUN apt update \
 	&& apt install build-essential checkinstall zlib1g-dev -y
 WORKDIR /usr/local/src
-RUN wget  https://www.openssl.org/source/openssl-${OPENSSL_VERSION}.tar.gz \ 
+RUN wget  https://www.openssl.org/source/openssl-${OPENSSL_VERSION}.tar.gz \
 	&& tar -xf  openssl-${OPENSSL_VERSION}.tar.gz \
 	&&  cd openssl-${OPENSSL_VERSION} \
 	&&  ./config --prefix=/usr/local/ssl --openssldir=/usr/local/ssl shared zlib \
@@ -31,7 +49,7 @@ RUN wget  https://www.openssl.org/source/openssl-${OPENSSL_VERSION}.tar.gz \
 	&& cd .. \
 	&& rm -rf *\
 	&& ldconfig \
-	&& mv /usr/local/ssl/bin/openssl /usr/bin/openssl # override openssl 
+	&& mv /usr/local/ssl/bin/openssl /usr/bin/openssl # override openssl
 
 # ensure local python is preferred over distribution python
 ENV PATH /usr/local/bin:$PATH
@@ -39,14 +57,6 @@ ENV PATH /usr/local/bin:$PATH
 # http://bugs.python.org/issue19846
 # > At the moment, setting "LANG=C" on a Linux system *fundamentally breaks Python 3*, and that's not OK.
 ENV LANG C.UTF-8
-
-# extra dependencies (over what buildpack-deps already includes)
-RUN apt-get update && apt-get install -y --no-install-recommends \
-		libbluetooth-dev \
-		tk-dev \
-		uuid-dev \
-	&& rm -rf /var/lib/apt/lists/*
-
 
 RUN set -ex \
 	\
