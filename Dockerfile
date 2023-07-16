@@ -6,38 +6,25 @@
 #
 # PLEASE DO NOT EDIT IT DIRECTLY.
 #
-FROM debian/eol:stretch
-
-RUN set -eux; \
-	apt-get update; \
-	apt-get install -y --no-install-recommends \
-		ca-certificates \
-		curl \
-		gnupg \
-		netbase \
-		wget \
-		git \
-		mercurial \
-		openssh-client \
-		subversion \
-		libbluetooth-dev \
-		tk-dev \
-		uuid-dev \
-		procps \
-	; \
-	rm -rf /var/lib/apt/lists/*
+FROM buildpack-deps:stretch
 
 ENV OPENSSL_VERSION 1.1.1q
 
 ENV GPG_KEY E3FF2839C048B25C084DEBE9B26995E310250568
 ENV PYTHON_VERSION 3.11.4
 
-ENV PYTHON_PIP_VERSION 22.3
-ENV PYTHON_GET_PIP_SHA256 36c6f6214694ef64cc70f4127ac0ccec668408a93825359d998fb31d24968d67
+ENV PYTHON_PIP_VERSION 23.2
+ENV PYTHON_GET_PIP_SHA256 221ebd8c2ac62fc2d6e80c60d9674e212c0a468879b7daddb0469570cfa5148f
+
+RUN sed -i -e 's/deb.debian.org/archive.debian.org/g' \
+           -e 's|security.debian.org|archive.debian.org/|g' \
+           -e '/stretch-updates/d' /etc/apt/sources.list
 
 RUN apt update \
 	&& apt install build-essential checkinstall zlib1g-dev -y
+
 WORKDIR /usr/local/src
+
 RUN wget  https://www.openssl.org/source/openssl-${OPENSSL_VERSION}.tar.gz \
 	&& tar -xf  openssl-${OPENSSL_VERSION}.tar.gz \
 	&&  cd openssl-${OPENSSL_VERSION} \
@@ -57,6 +44,13 @@ ENV PATH /usr/local/bin:$PATH
 # http://bugs.python.org/issue19846
 # > At the moment, setting "LANG=C" on a Linux system *fundamentally breaks Python 3*, and that's not OK.
 ENV LANG C.UTF-8
+
+# extra dependencies (over what buildpack-deps already includes)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+		libbluetooth-dev \
+		tk-dev \
+		uuid-dev \
+	&& rm -rf /var/lib/apt/lists/*
 
 RUN set -ex \
 	\
