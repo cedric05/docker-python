@@ -1,7 +1,7 @@
 /# docker-python
 
 
-## 3.10/3.11
+## 3.10/3.11/3.12
 
 python relies on c++ std library (glib).
 
