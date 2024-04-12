@@ -11,10 +11,10 @@ FROM buildpack-deps:stretch
 ENV OPENSSL_VERSION 1.1.1q
 
 ENV GPG_KEY E3FF2839C048B25C084DEBE9B26995E310250568
-ENV PYTHON_VERSION 3.12.0
+ENV PYTHON_VERSION 3.12.3
 
-ENV PYTHON_PIP_VERSION 23.2.1
-ENV PYTHON_GET_PIP_SHA256 45a2bb8bf2bb5eff16fdd00faef6f29731831c7c59bd9fc2bf1f3bed511ff1fe
+ENV PYTHON_PIP_VERSION 24.0
+ENV PYTHON_GET_PIP_SHA256 dfe9fd5c28dc98b5ac17979a953ea550cec37ae1b47a5116007395bfacff2ab9
 
 RUN sed -i -e 's/deb.debian.org/archive.debian.org/g' \
            -e 's|security.debian.org|archive.debian.org/|g' \
