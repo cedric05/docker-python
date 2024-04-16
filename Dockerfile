@@ -6,7 +6,7 @@
 #
 # PLEASE DO NOT EDIT IT DIRECTLY.
 #
-FROM buildpack-deps:stretch
+FROM buildpack-deps:buster
 
 ENV OPENSSL_VERSION 1.1.1q
 
@@ -16,9 +16,9 @@ ENV PYTHON_VERSION 3.12.0
 ENV PYTHON_PIP_VERSION 23.2.1
 ENV PYTHON_GET_PIP_SHA256 45a2bb8bf2bb5eff16fdd00faef6f29731831c7c59bd9fc2bf1f3bed511ff1fe
 
-RUN sed -i -e 's/deb.debian.org/archive.debian.org/g' \
-           -e 's|security.debian.org|archive.debian.org/|g' \
-           -e '/stretch-updates/d' /etc/apt/sources.list
+#RUN sed -i -e 's/deb.debian.org/archive.debian.org/g' \
+#           -e 's|security.debian.org|archive.debian.org/|g' \
+#           -e '/stretch-updates/d' /etc/apt/sources.list
 
 RUN apt update \
 	&& apt install build-essential checkinstall zlib1g-dev -y
