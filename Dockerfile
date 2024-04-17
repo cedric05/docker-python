@@ -21,7 +21,7 @@ ENV PYTHON_GET_PIP_SHA256 45a2bb8bf2bb5eff16fdd00faef6f29731831c7c59bd9fc2bf1f3b
 #           -e '/stretch-updates/d' /etc/apt/sources.list
 
 RUN apt update \
-	&& apt install build-essential checkinstall zlib1g-dev -y
+	&& apt install build-essential zlib1g-dev -y
 
 WORKDIR /usr/local/src
 
